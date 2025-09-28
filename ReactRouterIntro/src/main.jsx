@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Root from "./Components/Root/Root.jsx";
@@ -10,6 +9,8 @@ import Mobiles from "./Components/Mobiles/Mobiles.jsx";
 import AboutUs from "./Components/AboutUs/AboutUs.jsx";
 import Laptops from "./Components/Laptops/Laptops.jsx";
 import Users from "./Components/Users/Users.jsx";
+import UserDetails from "./Components/UserDetails/UserDetails.jsx";
+import NotFoundPage from "./Components/NotFoundPage/NotFoundPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,16 @@ const router = createBrowserRouter([
         path: "users",
         loader: () => fetch("https://jsonplaceholder.typicode.com/users"),
         Component: Users,
+      },
+      {
+        path: `user/:userId`,
+        loader: ({ params }) =>
+          fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
+        Component: UserDetails,
+      },
+      {
+        path: "*",
+        Component: NotFoundPage,
       },
     ],
   },
